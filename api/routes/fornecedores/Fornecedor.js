@@ -41,7 +41,7 @@ class Fornecedor {
         const newObject = {}
 
         fields.forEach(field => {
-            const value = this[field]
+            const value = this[field] || ''
             if (value.length > 0 && typeof value === 'string') newObject[field] = value
         })
 
