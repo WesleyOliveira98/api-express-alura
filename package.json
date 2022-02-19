@@ -1,0 +1,27 @@
+{
+  "name": "api-nodejs-alura",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WesleyOliveira98/api-nodejs-alura.git"
+  },
+  "keywords": [],
+  "author": "Wesley Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WesleyOliveira98/api-nodejs-alura/issues"
+  },
+  "homepage": "https://github.com/WesleyOliveira98/api-nodejs-alura#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "config": "^3.3.7",
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.16.2"
+  }
+}
