@@ -33,6 +33,21 @@ class Fornecedor {
         this.dataAtualizacao = encontrado.dataAtualizacao
         this.versao = encontrado.versao
     }
+
+    async atualizar () {
+        await TabelaFornecedor.pegarPorId(this.id)
+        const fields = ['empresa', 'email', 'categoria']
+        const newObject = {}
+
+        fields.forEach(field => {
+            const value = this[field]
+            if (value.length > 0 && typeof value === 'string') newObject[field] = value
+        })
+
+        if (Object.keys(newObject).length === 0) throw new Error('Não foram recebidos dados para atualizar!')
+
+        await TabelaFornecedor.atualizar(this.id, newObject)
+    }
 }
 
 module.exports = Fornecedor
