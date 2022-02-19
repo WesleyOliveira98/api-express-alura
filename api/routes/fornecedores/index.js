@@ -8,11 +8,16 @@ router.get('/', async (req,res) => {
 })
 
 router.post('/', async (req,res) => {
-    const body = req.body
-    console.log(body)
-    const fornecedor = new Fornecedor(body)
-    await fornecedor.criar()
-    res.send(JSON.stringify(fornecedor))
+    try {
+        const body = req.body
+        console.log(body)
+        const fornecedor = new Fornecedor(body)
+        await fornecedor.criar()
+        res.send(JSON.stringify(fornecedor))
+    } catch (error) { 
+        res.send(JSON.stringify({ erro: error.message })) 
+    }
+    
 })
 
 router.get('/:idFornecedor', async (req,res) => {
@@ -33,6 +38,18 @@ router.put('/:idFornecedor', async (req,res) => {
         const dados = {...body,...{id: id}}
         const fornecedor = new Fornecedor(dados)
         await fornecedor.atualizar()
+        res.send(JSON.stringify({ success: 200 })) 
+    } catch (error) { 
+        res.send(JSON.stringify({ erro: error.message })) 
+    }
+})
+
+router.delete('/:idFornecedor', async (req,res) => {
+    try {
+        const id = req.params.idFornecedor
+        const fornecedor = new Fornecedor({ id: id })
+        await fornecedor.carregar()
+        await fornecedor.remover()
         res.send(JSON.stringify({ success: 200 })) 
     } catch (error) { 
         res.send(JSON.stringify({ erro: error.message })) 

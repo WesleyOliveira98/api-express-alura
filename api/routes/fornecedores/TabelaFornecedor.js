@@ -20,5 +20,10 @@ module.exports = {
         return model.update(object, {
             where: { id: id }
         })
+    },
+    async remover (id) {
+        return model.destroy({
+            where: { id: id }
+        })
     }
 }
