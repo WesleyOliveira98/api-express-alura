@@ -1,4 +1,6 @@
 const TabelaFornecedor = require('./TabelaFornecedor')
+const CampoInvalido = require('../../erros/CampoInvalido')
+const DadosNaoRecebidos = require('../../erros/DadosNaoRecebidos')
 
 class Fornecedor {
     constructor({ id, empresa, email, categoria, dataCriacao, dataAtualizacao, versao }) {
@@ -45,7 +47,7 @@ class Fornecedor {
             if (value.length > 0 && typeof value === 'string') newObject[field] = value
         })
 
-        if (Object.keys(newObject).length === 0) throw new Error('Não foram recebidos dados para atualizar!')
+        if (Object.keys(newObject).length === 0) throw new DadosNaoRecebidos()
 
         await TabelaFornecedor.atualizar(this.id, newObject)
     }
@@ -59,7 +61,7 @@ class Fornecedor {
 
         fields.forEach(field => {
             const value = this[field]
-            if (typeof value !== 'string' || value.length === 0) throw new Error(`O campo '${field}' está inválido!`)
+            if (typeof value !== 'string' || value.length === 0) throw new CampoInvalido(field)
         })
     }
 }
