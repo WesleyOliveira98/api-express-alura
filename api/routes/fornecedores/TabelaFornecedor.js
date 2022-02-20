@@ -1,4 +1,5 @@
 const model = require('./table_model')
+const NaoEncontrado = require('../../erros/NaoEncontrado')
 
 module.exports = {
     listar () {
@@ -12,7 +13,7 @@ module.exports = {
             where: { id: id }
         })
 
-        if (!encontrado) throw new Error('Fornecedor não encontrado')
+        if (!encontrado) throw new NaoEncontrado()
         
         return encontrado
     },
