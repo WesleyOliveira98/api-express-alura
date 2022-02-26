@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
         const produto = new Produto(dados)
         await produto.criar()
         res.status(201)
-        res.send(produto)
+        res.send(JSON.stringify(produto))
     } catch (error) {
         next(error)
     }
@@ -31,6 +31,21 @@ router.delete('/:id', async (req, res) => {
     await produto.apagar()
     res.status(204)
     res.end()
+})
+
+router.get('/:id', async (req, res, next) => {
+    try {    
+        const dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
+        const produto = new Produto(dados)
+        await produto.carregar()
+        res.status(200)
+        res.send(JSON.stringify(produto))
+    } catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router
