@@ -69,6 +69,20 @@ router.delete('/:idFornecedor', async (req, res, next) => {
 })
 
 const produtosRouter = require('./produtos')
-router.use('/:idFornecedor/produtos', produtosRouter)
+
+//Middleware para verificação se o fornecedor informado existe
+const verificarFornecedor = async (req, res, next) => {
+    try {
+        const id = req.params.idFornecedor
+        const fornecedor = new Fornecedor({ id: id })
+        await fornecedor.carregar()
+        req.fornecedor = fornecedor
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+router.use('/:idFornecedor/produtos', verificarFornecedor, produtosRouter)
 
 module.exports = router
