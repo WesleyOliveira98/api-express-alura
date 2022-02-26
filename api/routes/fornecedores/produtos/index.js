@@ -8,14 +8,29 @@ router.get('/', async (req, res) => {
     res.send(JSON.stringify(produtos))
 })
 
-router.post('/', async (req, res) => {
-    const idFornecedor = req.params.idFornecedor
-    const body = req.body
-    const dados = {...body,...{ fornecedor: idFornecedor }}
+router.post('/', async (req, res, next) => {
+    try {
+        const idFornecedor = req.params.idFornecedor
+        const body = req.body
+        const dados = {...body,...{ fornecedor: idFornecedor }}
+        const produto = new Produto(dados)
+        await produto.criar()
+        res.status(201)
+        res.send(produto)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    const dados = {
+        id: req.params.id,
+        fornecedor: req.params.idFornecedor
+    }
     const produto = new Produto(dados)
-    await produto.criar()
-    res.status(201)
-    res.send(produto)
+    await produto.apagar()
+    res.status(204)
+    res.end()
 })
 
 module.exports = router

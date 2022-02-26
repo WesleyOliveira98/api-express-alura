@@ -11,5 +11,13 @@ module.exports = {
     },
     inserir (dados) {
         return Model.create(dados)
+    },
+    remover (idProduto, idFornecedor) {
+        return Model.destroy({
+            where: {
+                id: idProduto,
+                fornecedor: idFornecedor
+            }
+        })
     }
 }
