@@ -8,5 +8,8 @@ module.exports = {
                 fornecedor: idFornecedor
             }
         })
+    },
+    inserir (dados) {
+        return Model.create(dados)
     }
 }

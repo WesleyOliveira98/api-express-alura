@@ -11,6 +11,7 @@ const SerializadorError = require('./Serializador').SerializadorError
 
 app.use(bodyParser.json())
 
+//Middleware executado antes de todas as requisições
 app.use((req, res, next) => {
     let formatoRequisicao = req.header('Accept')
 
@@ -26,9 +27,11 @@ app.use((req, res, next) => {
     next()
 })
 
+//Rotas de Fornecedores
 const router = require('./routes/fornecedores')
 app.use('/api/fornecedores', router)
 
+//Middleware de erros
 app.use((error, req, res, next) => {
     let status = 500
     if (error instanceof NaoEncontrado) status = 404
