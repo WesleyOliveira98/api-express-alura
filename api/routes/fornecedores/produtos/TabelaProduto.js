@@ -6,7 +6,8 @@ module.exports = {
         return Model.findAll({
             where: {
                 fornecedor: idFornecedor
-            }
+            },
+            raw: true
         })
     },
     inserir (dados) {
