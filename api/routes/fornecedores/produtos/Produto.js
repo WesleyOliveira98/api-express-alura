@@ -20,6 +20,10 @@ class Produto {
         if (typeof this.preco !== 'number' || this.preco === 0) {
             throw new Error('O campo preco está invalido')
         }
+
+        if (typeof this.estoque !== 'number' || this.estoque.length === 0) {
+            throw new Error('O campo titulo está invalido')
+        }
     }
 
     async criar () {
@@ -49,6 +53,28 @@ class Produto {
         this.dataCriacao = produto.dataCriacao
         this.dataAtualizacao = produto.dataAtualizacao
         this.versao = produto.versao
+    }
+
+    atualizar() {
+        const newObject = {}
+
+        if (typeof this.titulo === 'string') {
+            newObject.titulo = this.titulo
+        }
+
+        if (typeof this.preco === 'number' || this.preco !== 0) {
+            newObject.preco = this.preco
+        }
+
+        if (typeof this.estoque === 'number') {
+            newObject.estoque = this.estoque
+        }
+
+        if (Object.keys(newObject).length === 0){
+            throw new Error('Sem dados para atualizar')
+        }
+
+        return TabelaProduto.atualizar({ id: this.id, fornecedor: this.fornecedor}, newObject)
     }
 }
 

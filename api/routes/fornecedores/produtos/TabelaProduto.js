@@ -33,5 +33,10 @@ module.exports = {
         if (!encontrado) throw new Error('Produto não foi encontrado')
 
         return encontrado
+    },
+    atualizar (dadosProduto, novosDados) {
+        return Model.update(novosDados, {
+            where: dadosProduto
+        })
     }
 }
