@@ -70,4 +70,20 @@ router.put('/:id', async (req, res, next) => {
     }
 })
 
+router.post('/:id/diminuir-estoque', async (req, res, next) => {
+    try {
+        const produto = new Produto({
+            id: req.params.id,
+            fornecedor: req.fornecedor.id 
+        })
+        await produto.carregar()
+        produto.estoque = produto.estoque - req.body.quantidade
+        await produto.diminuirEstoque()
+        res.status(204)
+        res.end()
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router

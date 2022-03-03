@@ -1,4 +1,5 @@
 const Model = require('./table_model')
+const instance = require('../../../db')
 
 //DAO (Data Acess Object)
 module.exports = {
@@ -37,6 +38,22 @@ module.exports = {
     atualizar (dadosProduto, novosDados) {
         return Model.update(novosDados, {
             where: dadosProduto
+        })
+    },
+    subtrair (idProduto, idFornecedor, campo, quantidade) {
+        return instance.transaction(async transacao => {
+            const produto = await Model.findOne({
+                where: {
+                    id: idProduto,
+                    fornecedor: idFornecedor
+                }
+            })
+
+            produto[campo] = quantidade
+
+            await produto.save()
+
+            return produto
         })
     }
 }

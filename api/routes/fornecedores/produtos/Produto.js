@@ -76,6 +76,15 @@ class Produto {
 
         return TabelaProduto.atualizar({ id: this.id, fornecedor: this.fornecedor}, newObject)
     }
+
+    diminuirEstoque () {
+        return TabelaProduto.subtrair(
+            this.id, 
+            this.fornecedor,
+            'estoque',
+            this.estoque
+        )
+    }
 }
 
 module.exports = Produto
