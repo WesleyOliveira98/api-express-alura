@@ -18,6 +18,9 @@ router.post('/', async (req, res, next) => {
         const produto = new Produto(dados)
         await produto.criar()
         const serializador = new Serializador(res.getHeader('Content-Type'))
+        res.set('ETag', produto.versao)
+        res.set('Last-Modified', new Date(produto.dataAtualizacao).getTime())
+        res.set('Location', `/api/fornecedores/${produto.fornecedor}/produtos/${produto.id}`)
         res.status(201)
         res.send(serializador.serializar(produto))
     } catch (error) {
@@ -48,6 +51,8 @@ router.get('/:id', async (req, res, next) => {
             res.getHeader('Content-Type'),
             ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
+        res.set('ETag', produto.versao)
+        res.set('Last-Modified', new Date(produto.dataAtualizacao).getTime())
         res.status(200)
         res.send(serializador.serializar(produto))
     } catch (error) {
@@ -63,6 +68,9 @@ router.put('/:id', async (req, res, next) => {
         }}
         const produto = new Produto(dados)
         await produto.atualizar()
+        await produto.carregar()
+        res.set('ETag', produto.versao)
+        res.set('Last-Modified', new Date(produto.dataAtualizacao).getTime())
         res.status(204)
         res.end()
     } catch (error) {
@@ -70,6 +78,7 @@ router.put('/:id', async (req, res, next) => {
     }
 })
 
+//Controller de Dimuiur o Estoque
 router.post('/:id/diminuir-estoque', async (req, res, next) => {
     try {
         const produto = new Produto({
@@ -79,6 +88,9 @@ router.post('/:id/diminuir-estoque', async (req, res, next) => {
         await produto.carregar()
         produto.estoque = produto.estoque - req.body.quantidade
         await produto.diminuirEstoque()
+        await produto.carregar()
+        res.set('ETag', produto.versao)
+        res.set('Last-Modified', new Date(produto.dataAtualizacao).getTime())
         res.status(204)
         res.end()
     } catch (error) {
