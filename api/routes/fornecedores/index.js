@@ -13,7 +13,7 @@ router.options('/', (req, res) => {
 router.get('/', async (req, res) => {
     const result = await TabelaFornecedor.listar()
     res.status(200)
-    const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'))
+    const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'),['empresa'])
     res.send(serializador.serializar(result))
 })
 
@@ -24,7 +24,7 @@ router.post('/', async (req, res, next) => {
         const fornecedor = new Fornecedor(body)
         await fornecedor.criar()
         res.status(201)
-        const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'))
+        const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'),['empresa'])
         res.send(serializador.serializar(fornecedor))
     } catch (error) { 
         next(error)
@@ -47,7 +47,7 @@ router.get('/:idFornecedor', async (req, res, next) => {
         res.status(200)
         const serializador = new SerializadorFornecedor(
             res.getHeader('Content-Type'), 
-            ['email', 'dataCriacao', 'dataAtualizacao', 'versao']
+            ['empresa', 'email', 'dataCriacao', 'dataAtualizacao', 'versao']
         )
         res.send(serializador.serializar(fornecedor))
     } catch (error) { 

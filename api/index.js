@@ -37,6 +37,10 @@ app.use((req, res, next) => {
 const router = require('./routes/fornecedores')
 app.use('/api/fornecedores', router)
 
+//Rotas de Fornecedores V2
+const routerV2 = require('./routes/fornecedores/v2_routes')
+app.use('/api/v2/fornecedores', routerV2)
+
 //Middleware de erros
 app.use((error, req, res, next) => {
     let status = 500
