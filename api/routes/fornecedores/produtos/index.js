@@ -4,6 +4,13 @@ const TabelaProduto = require('./TabelaProduto')
 const Produto = require('./Produto')
 const Serializador = require('../../../Serializador').SerializadorProduto
 
+router.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204)
+    res.end()
+})
+
 router.get('/', async (req, res) => {
     const produtos = await TabelaProduto.listar(req.fornecedor.id)
     const serializador = new Serializador(res.getHeader('Content-Type'))
@@ -26,6 +33,13 @@ router.post('/', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+
+router.options('/:id', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE, HEAD')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204)
+    res.end()
 })
 
 router.delete('/:id', async (req, res) => {
@@ -94,6 +108,13 @@ router.put('/:id', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+
+router.options('/:id/diminuir-estoque', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204)
+    res.end()
 })
 
 //Controller de Dimuiur o Estoque

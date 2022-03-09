@@ -3,7 +3,14 @@ const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor
 
-router.get('/', async (req,res) => {
+router.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204)
+    res.end()
+})
+
+router.get('/', async (req, res) => {
     const result = await TabelaFornecedor.listar()
     res.status(200)
     const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'))
@@ -23,6 +30,13 @@ router.post('/', async (req, res, next) => {
         next(error)
     }
     
+})
+
+router.options('/:idFornecedor', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204)
+    res.end()
 })
 
 router.get('/:idFornecedor', async (req, res, next) => {
