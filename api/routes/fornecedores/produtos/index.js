@@ -60,6 +60,24 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+//Acessar os headers da requisição
+router.head('/:id', async (req, res, next) => {
+    try {    
+        const dados = {
+            id: req.params.id,
+            fornecedor: req.fornecedor.id
+        }
+        const produto = new Produto(dados)
+        await produto.carregar()
+        res.set('ETag', produto.versao)
+        res.set('Last-Modified', new Date(produto.dataAtualizacao).getTime())
+        res.status(200)
+        res.end()
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.put('/:id', async (req, res, next) => {
     try{
         const dados = {...req.body, ...{ 

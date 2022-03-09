@@ -1,5 +1,6 @@
 const Model = require('./table_model')
 const instance = require('../../../db')
+const NaoEncontrado = require('../../../erros/NaoEncontrado')
 
 //DAO (Data Acess Object)
 module.exports = {
@@ -31,7 +32,7 @@ module.exports = {
             raw: true
         })
 
-        if (!encontrado) throw new Error('Produto não foi encontrado')
+        if (!encontrado) throw new NaoEncontrado('Produto')
 
         return encontrado
     },
