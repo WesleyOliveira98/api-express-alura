@@ -27,6 +27,12 @@ app.use((req, res, next) => {
     next()
 })
 
+//Middleware para controlar o Acess-Control-Allow-Origin
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*')
+    next()
+})
+
 //Rotas de Fornecedores
 const router = require('./routes/fornecedores')
 app.use('/api/fornecedores', router)
