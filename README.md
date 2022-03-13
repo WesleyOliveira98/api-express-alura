@@ -16,6 +16,6 @@
 </ul>
 <h3>Instalação e Inicialização</h3>
 <code>git clone https://github.com/WesleyOliveira98/api-nodejs-alura.git</code><br><br>
-<code>cd api-nodejs-alura</code><br><br>
+<code>cd api-express-alura</code><br><br>
 <code>npm install</code><br><br>
 <code>npm start</code>
