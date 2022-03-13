@@ -2,8 +2,8 @@
 <p>Projeto desenvolvido através dos cursos da Alura, onde foi desenvolvida uma API REST usando Express e MySQL, suportando respostas em JSON e XML.</p>
 <h3>Tecnologias utilizadas:</h3>
 <ul>
-    <li>Node.js</li>
-    <li>MySQL</li>
+    <li><a href="https://nodejs.org/en/">Node.js</a></li>
+    <li><a href="https://www.mysql.com/">MySQL</a></li>
 </ul>
 <h3>Dependências utilizadas:</h3>
 <ul>
